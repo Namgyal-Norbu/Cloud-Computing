@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Header from './components/Header';
-import UploadSection from './components/UploadSection';
-import FileManagement from './components/FileManagement';
-import CryptoTest from './components/CryptoText';
-import Footer from './components/Footer';
 import PurposePage from './components/PurposePage';
 import StoredFilesPage from './components/StoredFilesPage';
+import DashboardPage from './components/DashboardPage';
+import HomePage from './components/HomePage';
+import Footer from './components/Footer';
 import './index.css';
 
 function App() {
@@ -55,6 +53,9 @@ function App() {
               <Link to="/">Home</Link>
             </li>
             <li>
+              <Link to="/dashboard">Dashboard</Link>
+            </li>
+            <li>
               <Link to="/purpose">Purpose</Link>
             </li>
             <li>
@@ -65,41 +66,26 @@ function App() {
 
         {/* Routes */}
         <Routes>
+          <Route path="/" element={<HomePage />} />
           <Route
-            path="/"
+            path="/dashboard"
             element={
-              <div>
-                <Header isLoggedIn={isLoggedIn} handleLogin={handleLogin} handleLogout={handleLogout} />
-                {isLoggedIn ? (
-                  <>
-                    <UploadSection onUpload={handleUpload} />
-                    <FileManagement files={files} />
-                    <CryptoTest onEncrypt={handleEncrypt} />
-                    {response && (
-                      <div style={{ marginTop: '20px' }}>
-                        <h3>Encrypted Data</h3>
-                        <p>
-                          <strong>Encrypted Text:</strong> {response.encrypted}
-                        </p>
-                        <p>
-                          <strong>Key:</strong> {response.key}
-                        </p>
-                        <p>
-                          <strong>IV:</strong> {response.iv}
-                        </p>
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  <p>Please log in to upload and manage files.</p>
-                )}
-                <Footer />
-              </div>
+              <DashboardPage
+                isLoggedIn={isLoggedIn}
+                handleLogin={handleLogin}
+                handleLogout={handleLogout}
+                handleUpload={handleUpload}
+                handleEncrypt={handleEncrypt}
+                files={files}
+                response={response}
+              />
             }
           />
           <Route path="/purpose" element={<PurposePage />} />
           <Route path="/stored-files" element={<StoredFilesPage files={files} />} />
         </Routes>
+
+        <Footer />
       </div>
     </Router>
   );
