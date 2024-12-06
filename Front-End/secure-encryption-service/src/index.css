@@ -31,3 +31,75 @@ footer {
   padding: 10px;
   background-color: #f1f1f1;
 }
+
+.navbar {
+  background-color: #282c34;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar li {
+  margin: 0 15px;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+.purpose-page {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.purpose-page h2 {
+  font-size: 2rem;
+  color: #007bff;
+}
+
+.purpose-page p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-top: 10px;
+}
+
+.stored-files-page {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.stored-files-page h2 {
+  font-size: 2rem;
+  color: #007bff;
+}
+
+.stored-files-page ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.stored-files-page li {
+  font-size: 1.2rem;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
