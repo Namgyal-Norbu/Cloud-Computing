@@ -1,162 +1,86 @@
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Roboto', Arial, sans-serif;
   margin: 0;
   padding: 0;
+  background-color: #f4f4f9; 
+  color: #333; 
 }
 
 header {
-  background-color: #007bff;
+  background-color: #006d77; /* Teal */
   color: white;
-  padding: 1rem;
+  padding: 1.5rem;
   text-align: center;
-}
-
-nav button {
-  margin: 0 5px;
-  padding: 10px 20px;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
-}
-
-section {
-  margin: 20px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 footer {
   text-align: center;
   padding: 10px;
-  background-color: #f1f1f1;
+  background-color: #83c5be; /* Soft teal */
+  color: #333;
+  font-size: 0.9rem;
 }
 
+/* Navbar Styles */
 .navbar {
-  background-color: #282c34;
-  padding: 1rem;
   display: flex;
-  justify-content: center;
+  justify-content: center; /* Centers the navigation items horizontally */
+  align-items: center;
+  background-color: #006d77; /* Teal */
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .navbar ul {
-  list-style: none;
   display: flex;
+  list-style: none;
   margin: 0;
   padding: 0;
 }
 
 .navbar li {
-  margin: 0 15px;
+  margin: 0 20px; /* Adds space between the navigation links */
 }
 
 .navbar a {
-  color: white;
   text-decoration: none;
-  font-size: 1.2rem;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: color 0.3s ease;
 }
 
 .navbar a:hover {
-  text-decoration: underline;
+  color: #83c5be; /* Light teal */
 }
 
-.purpose-page {
-  margin: 20px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+.logout-container {
+  margin-left: auto; /* Push logout to the right */
 }
 
-.purpose-page h2 {
-  font-size: 2rem;
-  color: #007bff;
-}
-
-.purpose-page p {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  margin-top: 10px;
-}
-
-.stored-files-page {
-  margin: 20px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.stored-files-page h2 {
-  font-size: 2rem;
-  color: #007bff;
-}
-
-.stored-files-page ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.stored-files-page li {
-  font-size: 1.2rem;
-  margin: 10px 0;
-  padding: 10px;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-.dashboard-page {
-  margin: 20px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.dashboard-actions {
-  display: flex;
-  justify-content: space-around;
-  margin: 20px 0;
-}
-
-.dashboard-link {
-  text-decoration: none;
-  background-color: #007bff;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 1.1rem;
-}
-
-.dashboard-link:hover {
-  background-color: #0056b3;
-}
-
-.dashboard-files {
-  list-style-type: none;
-  padding: 0;
-}
-
-.dashboard-files li {
-  background-color: #f9f9f9;
-  padding: 10px;
-  margin: 5px 0;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
+/* Home Page */
 .home-page {
   text-align: center;
   margin: 20px;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .home-page h1 {
   font-size: 2.5rem;
-  color: #007bff;
+  color: #006d77; /* Teal */
 }
 
 .home-page p {
   font-size: 1.2rem;
   margin: 10px 0 20px;
+  color: #555; /* Dark gray */
 }
 
 .home-actions {
@@ -168,13 +92,355 @@ footer {
 
 .home-link {
   text-decoration: none;
-  background-color: #28a745;
+  background-color: #006d77; /* Teal */
   color: white;
-  padding: 10px 20px;
+  padding: 12px 24px;
   border-radius: 5px;
   font-size: 1.1rem;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .home-link:hover {
-  background-color: #218838;
+  background-color: #83c5be; /* Light teal */
+  transform: translateY(-2px); /* Subtle hover effect */
 }
+
+/* Login and Sign-Up Pages */
+.login-page,
+.signup-page {
+  margin: 20px auto;
+  max-width: 400px;
+  padding: 30px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.login-page h2,
+.signup-page h2 {
+  font-size: 2rem;
+  color: #006d77;
+  margin-bottom: 20px;
+}
+
+.login-form,
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.login-button,
+.signup-button {
+  background-color: #006d77;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.login-button:hover,
+.signup-button:hover {
+  background-color: #83c5be; /* Light teal */
+  transform: translateY(-2px); /* Subtle hover effect */
+}
+
+.signup-link,
+.login-link {
+  margin-top: 20px;
+  font-size: 0.9rem;
+}
+
+.signup-link a,
+.login-link a {
+  color: #006d77;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.signup-link a:hover,
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+/* Purpose Page */
+.purpose-page {
+  margin: 20px;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.purpose-page h2 {
+  font-size: 2rem;
+  color: #006d77;
+}
+
+.purpose-page p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+/* Stored Files Page */
+.stored-files-page {
+  margin: 20px;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.stored-files-page h2 {
+  font-size: 2rem;
+  color: #006d77;
+}
+
+.stored-files-page ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.stored-files-page li {
+  font-size: 1.2rem;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #f4f4f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Dashboard Page */
+.dashboard-page {
+  margin: 20px;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-actions {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0;
+}
+
+.dashboard-link {
+  text-decoration: none;
+  background-color: #006d77;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.dashboard-link:hover {
+  background-color: #83c5be; /* Light teal */
+  transform: translateY(-2px);
+}
+
+.dashboard-files {
+  list-style-type: none;
+  padding: 0;
+}
+
+.dashboard-files li {
+  background-color: #f4f4f9;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Upload Section */
+.upload-section {
+  margin: 20px;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.upload-section h2 {
+  font-size: 2rem;
+  color: #006d77; /* Teal */
+  margin-bottom: 20px;
+}
+
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-group label {
+  font-weight: bold;
+  color: #555; /* Dark gray */
+}
+
+.file-input,
+.password-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+  color: #333;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle inset shadow */
+  transition: border-color 0.3s ease;
+}
+
+.file-input:hover,
+.password-input:hover {
+  background-color: #f4f4f9; /* Slight hover effect */
+}
+
+.file-input:focus,
+.password-input:focus {
+  border-color: #006d77; /* Teal focus color */
+  outline: none;
+}
+
+.submit-button {
+  background-color: #006d77; /* Teal */
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.submit-button:hover {
+  background-color: #83c5be; /* Light teal */
+  transform: translateY(-2px); /* Subtle lift effect */
+}
+
+.submit-button:active {
+  transform: translateY(1px); /* Button press effect */
+}
+/* Hide the default file input */
+.file-input {
+  display: none; /* Hides the default file input */
+}
+
+/* Custom File Input Label */
+.custom-file-label {
+  display: inline-block;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  background-color: #006d77; /* Teal */
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.custom-file-label:hover {
+  background-color: #83c5be; /* Light teal */
+  transform: translateY(-2px); /* Subtle lift effect */
+}
+
+.custom-file-label:active {
+  transform: translateY(1px); /* Button press effect */
+}
+/* Custom File Input Label */
+.custom-file-label {
+  display: inline-block;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white; /* Ensures text is white */
+  background-color: #006d77; /* Teal */
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.custom-file-label:hover {
+  background-color: #83c5be; /* Light teal */
+  transform: translateY(-2px); /* Subtle lift effect */
+  color: white; /* Keeps text white on hover */
+}
+
+.custom-file-label:active {
+  transform: translateY(1px); /* Button press effect */
+  color: white; /* Keeps text white on active state */
+}
+/* Custom File Input Label */
+.custom-file-label {
+  display: inline-block;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white !important; /* Force text to be white */
+  background-color: #006d77; /* Teal */
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.custom-file-label:hover {
+  background-color: #83c5be; /* Light teal */
+  transform: translateY(-2px); /* Subtle lift effect */
+  color: white !important; /* Ensure text remains white on hover */
+}
+
+.custom-file-label:active {
+  transform: translateY(1px); /* Button press effect */
+  color: white !important; /* Ensure text remains white on active state */
+}
+
+
+

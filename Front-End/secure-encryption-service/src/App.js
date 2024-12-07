@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import LoginPage from './components/LoginPage';
+import SignUpPage from './components/SignUpPage';
 import PurposePage from './components/PurposePage';
 import StoredFilesPage from './components/StoredFilesPage';
 import DashboardPage from './components/DashboardPage';
@@ -13,16 +15,15 @@ function App() {
   const [response, setResponse] = useState(null);
 
   const handleLogin = () => {
-    alert('Google Sign-In to be implemented');
     setIsLoggedIn(true);
   };
 
   const handleLogout = () => {
-    alert('Google Sign-Out to be implemented');
     setIsLoggedIn(false);
   };
 
   const handleUpload = (file, password) => {
+    // Simulate file encryption and upload
     alert(`File ${file.name} encrypted with password ${password}`);
     setFiles([...files, { name: file.name }]);
   };
@@ -52,14 +53,33 @@ function App() {
             <li>
               <Link to="/">Home</Link>
             </li>
-            <li>
-              <Link to="/dashboard">Dashboard</Link>
-            </li>
+            {!isLoggedIn && (
+              <>
+                <li>
+                  <Link to="/login">Login</Link>
+                </li>
+                <li>
+                  <Link to="/signup">Sign Up</Link>
+                </li>
+              </>
+            )}
+            {isLoggedIn && (
+              <>
+                <li>
+                  <Link to="/dashboard">Dashboard</Link>
+                </li>
+                <li>
+                  <Link to="/stored-files">Stored Files</Link>
+                </li>
+                <li className="logout-container">
+                  <Link to="/" onClick={handleLogout}>
+                    Logout
+                  </Link>
+                </li>
+              </>
+            )}
             <li>
               <Link to="/purpose">Purpose</Link>
-            </li>
-            <li>
-              <Link to="/stored-files">Stored Files</Link>
             </li>
           </ul>
         </nav>
@@ -67,22 +87,34 @@ function App() {
         {/* Routes */}
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage handleLogin={handleLogin} />} />
+          <Route path="/signup" element={<SignUpPage />} />
           <Route
             path="/dashboard"
             element={
-              <DashboardPage
-                isLoggedIn={isLoggedIn}
-                handleLogin={handleLogin}
-                handleLogout={handleLogout}
-                handleUpload={handleUpload}
-                handleEncrypt={handleEncrypt}
-                files={files}
-                response={response}
-              />
+              isLoggedIn ? (
+                <DashboardPage
+                  handleUpload={handleUpload}
+                  handleEncrypt={handleEncrypt}
+                  files={files}
+                  response={response}
+                />
+              ) : (
+                <p>Please log in to access the dashboard.</p>
+              )
             }
           />
           <Route path="/purpose" element={<PurposePage />} />
-          <Route path="/stored-files" element={<StoredFilesPage files={files} />} />
+          <Route
+            path="/stored-files"
+            element={
+              isLoggedIn ? (
+                <StoredFilesPage files={files} />
+              ) : (
+                <p>Please log in to view stored files.</p>
+              )
+            }
+          />
         </Routes>
 
         <Footer />
