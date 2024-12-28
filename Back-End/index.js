@@ -5,7 +5,6 @@ const multer = require('multer');
 const crypto = require('crypto');
 const { Storage } = require('@google-cloud/storage'); // Import Google Cloud Storage
 
-// Google Cloud Storage setup
 const storage = new Storage({ keyFilename: './Back-End/newkey.json' });
 const bucketName = 'encrypted-files-storage'; // Replace with your bucket name
 

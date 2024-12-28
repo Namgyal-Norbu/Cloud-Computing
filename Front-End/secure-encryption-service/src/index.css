@@ -442,5 +442,95 @@ footer {
   color: white !important; /* Ensure text remains white on active state */
 }
 
+.navbar {
+  display: flex;
+  justify-content: space-between; /* Space between left and right sections */
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #006d77;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Navbar List */
+.navbar-list {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-list li {
+  margin-right: 20px;
+}
+
+.navbar-list li a {
+  text-decoration: none;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.navbar-list li a:hover {
+  color: #83c5be; /* Light teal */
+}
+
+/* Navbar Right Section */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Adds space between elements */
+  margin-left: auto; /* Push to far right */
+}
+
+/* Profile Picture */
+.profile-picture {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Google Login Button */
+.google-login-button {
+  background-color: #006d77;
+  color: white !important;
+  border: none;
+  border-radius: 5px;
+  padding: 
+css
+Copy code
+  12px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.google-login-button:hover {
+  background-color: #83c5be;
+  transform: translateY(-2px);
+}
+
+/* Logout Button */
+.logout-button {
+  background-color: #dc3545;
+  color: white;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.logout-button:hover {
+  background-color: #c82333;
+  transform: translateY(-2px);
+}
+
+
 
 
