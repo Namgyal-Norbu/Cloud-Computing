@@ -8,7 +8,9 @@ const StoredFilesPage = ({ files }) => {
         <ul>
           {files.map((file, index) => (
             <li key={index}>
-              <strong>{file.name}</strong>
+              <a href={file.url} download={file.name} className="download-link">
+                {file.name}
+              </a>
             </li>
           ))}
         </ul>

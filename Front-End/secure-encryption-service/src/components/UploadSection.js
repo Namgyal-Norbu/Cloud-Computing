@@ -7,10 +7,9 @@ const UploadSection = ({ onUpload }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (file && password) {
-      onUpload(file, password);
+      onUpload(file, password); // Pass the file and password to the parent
       setFile(null);
       setPassword('');
-      alert(`File "${file.name}" has been encrypted and uploaded.`);
     } else {
       alert('Please select a file and provide a password.');
     }

@@ -493,6 +493,24 @@ footer {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Logout Button */
+.logout-button {
+  background-color: #dc3545;
+  color: white;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-left: 10px; /* Adds spacing between profile picture and button */
+}
+
+.logout-button:hover {
+  background-color: #c82333;
+  transform: translateY(-2px);
+}
+
 /* Google Login Button */
 .google-login-button {
   background-color: #006d77;
@@ -500,8 +518,6 @@ footer {
   border: none;
   border-radius: 5px;
   padding: 
-css
-Copy code
   12px 20px;
   font-size: 1rem;
   cursor: pointer;
@@ -514,23 +530,66 @@ Copy code
   transform: translateY(-2px);
 }
 
-/* Logout Button */
-.logout-button {
-  background-color: #dc3545;
-  color: white;
-  text-decoration: none;
-  padding: 10px 15px;
+
+
+
+.uploaded-files {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
   border-radius: 5px;
-  font-size: 1rem;
+}
+
+.uploaded-files h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #006d77;
+}
+
+.uploaded-files ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.uploaded-files li {
+  margin-bottom: 10px;
+}
+
+.download-link {
+  text-decoration: none;
+  color: #006d77;
   font-weight: bold;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: color 0.3s;
 }
 
-.logout-button:hover {
-  background-color: #c82333;
-  transform: translateY(-2px);
+.download-link:hover {
+  color: #83c5be; /* Light teal */
 }
 
+.navbar-list li a.active {
+  border-bottom: 2px solid #83c5be;
+}
+.google-login-button:focus {
+  outline: 2px solid #83c5be;
+  outline-offset: 2px;
+}
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+.alert-error {
+  color: #721c24;
+  background-color: #f8d7da;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+}
 
 
 

@@ -18,7 +18,9 @@ const DashboardPage = ({
       <UploadSection onUpload={handleUpload} />
 
       {/* File Management Section */}
-      <FileManagement files={files} />
+      {files && files.length > 0 && (
+        <FileManagement files={files} />
+      )}
 
       {/* Crypto Test Section */}
       <CryptoTest onEncrypt={handleEncrypt} />
@@ -43,3 +45,4 @@ const DashboardPage = ({
 };
 
 export default DashboardPage;
+
