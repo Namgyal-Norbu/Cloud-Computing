@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
 
-const UploadSection = ({ onUpload }) => {
+const UploadSection = ({ onUpload, userEmail }) => {
   const [file, setFile] = useState(null);
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!userEmail) {
+      alert('User email is required for file upload.');
+      return;
+    }
+
     if (file && password) {
-      onUpload(file, password); // Pass the file and password to the parent
-      setFile(null);
-      setPassword('');
+      onUpload(file, password, userEmail); // Pass file, password, and userEmail to parent
+      setFile(null); // Clear the file input after submission
+      setPassword(''); // Clear the password input after submission
     } else {
       alert('Please select a file and provide a password.');
     }
