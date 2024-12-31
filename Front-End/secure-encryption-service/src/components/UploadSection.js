@@ -1,23 +1,57 @@
 import React, { useState } from 'react';
 
-const UploadSection = ({ onUpload, userEmail }) => {
+const UploadSection = ({ userEmail }) => {
   const [file, setFile] = useState(null);
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!userEmail) {
-      alert('User email is required for file upload.');
+      setMessage('User email is required for file upload.');
       return;
     }
 
-    if (file && password) {
-      onUpload(file, password, userEmail); // Pass file, password, and userEmail to parent
-      setFile(null); // Clear the file input after submission
-      setPassword(''); // Clear the password input after submission
-    } else {
-      alert('Please select a file and provide a password.');
+    if (!file || !password) {
+      setMessage('Please select a file and provide a password.');
+      return;
+    }
+
+    setIsUploading(true);
+    setMessage('');
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('email', userEmail);
+      formData.append('password', password);
+
+      const response = await fetch('http://localhost:5001/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('File upload failed.');
+      }
+
+      const result = await response.json();
+      console.log('Upload result:', result);
+
+      if (result.success) {
+        setMessage(`Upload successful! File ID: ${result.metadata.id}`);
+      } else {
+        setMessage('Failed to upload file.');
+      }
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      setMessage('An error occurred during file upload.');
+    } finally {
+      setIsUploading(false);
+      setFile(null);
+      setPassword('');
     }
   };
 
@@ -54,10 +88,15 @@ const UploadSection = ({ onUpload, userEmail }) => {
             required
           />
         </div>
-        <button type="submit" className="submit-button">
-          Encrypt & Upload
+        <button
+          type="submit"
+          className="submit-button"
+          disabled={isUploading}
+        >
+          {isUploading ? 'Uploading...' : 'Encrypt & Upload'}
         </button>
       </form>
+      {message && <p className="upload-message">{message}</p>}
     </section>
   );
 };
