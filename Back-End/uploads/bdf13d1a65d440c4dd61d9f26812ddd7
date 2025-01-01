@@ -1,0 +1,24 @@
+
+* products function
+The function is correctly implemented.
+Your recursive definition correctly eliminates duplicates, but is much more obscure than using the Set container (see exercise 1 of session 6), which is also more efficient.
+Mark: 18/25
+
+* unavailable function
+The function is mostly correct, except for the following.
+When two different customers order the same unavailable product, the customer is repeated in the list associated with that product.
+This is rather complicated. It would be cleaner (and much more efficient) to do this using bulk operations on Map containers, e.g. using Map.difference.
+Mark: 15/25
+
+* bill function
+The function is partly correct, except for the following.
+If a customer has multiple orders, multiple duplicate bills are produced.
+This solution is difficult to follow. It would be cleaner (and much more efficient) to do this using bulk operations on Map containers, e.g. using Map.intersectionWith instead of lookup.
+Mark: 14/25
+
+* bill_discount function
+The function is correctly implemented.
+The structure is the same as bill, except for the way a cost is obtained from a quantity and price. It could be simplified by parameterizing bill with a function performing that calculation.
+Mark: 19/25
+
+Total mark: 66/100
