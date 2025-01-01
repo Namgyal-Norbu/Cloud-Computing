@@ -5,6 +5,7 @@ import PurposePage from './components/PurposePage';
 import DashboardPage from './components/DashboardPage';
 import HomePage from './components/HomePage';
 import StoredFilesPage from './components/StoredFilesPage';
+import UploadSection from './components/UploadSection'; // Import UploadSection
 import Footer from './components/Footer';
 import './index.css';
 
@@ -78,6 +79,7 @@ function App() {
                 <>
                   <li><Link to="/dashboard">Dashboard</Link></li>
                   <li><Link to="/stored-files">Stored Files</Link></li>
+                  <li><Link to="/upload">Upload Files</Link></li> {/* Add Upload Section Link */}
                 </>
               )}
             </ul>
@@ -113,9 +115,7 @@ function App() {
               path="/dashboard"
               element={
                 isLoggedIn ? (
-                  <DashboardPage
-                    userProfile={userProfile}
-                  />
+                  <DashboardPage userProfile={userProfile} />
                 ) : (
                   <p>Please log in to access the dashboard.</p>
                 )
@@ -131,6 +131,16 @@ function App() {
                 )
               }
             />
+            <Route
+              path="/upload"
+              element={
+                isLoggedIn ? (
+                  <UploadSection userEmail={userProfile?.email} />
+                ) : (
+                  <p>Please log in to upload files.</p>
+                )
+              }
+            /> {/* Add Upload Section Route */}
             <Route path="/purpose" element={<PurposePage />} />
           </Routes>
 
