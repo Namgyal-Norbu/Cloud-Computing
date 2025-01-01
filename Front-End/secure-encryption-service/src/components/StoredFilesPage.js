@@ -5,6 +5,7 @@ import { db } from '../firebase'; // Import your Firestore instance
 const StoredFilesPage = ({ userEmail }) => {
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null); // Added error state
 
   // Fetch files from Firestore for the logged-in user
   const fetchFiles = async () => {
@@ -18,9 +19,9 @@ const StoredFilesPage = ({ userEmail }) => {
       });
 
       setFiles(fetchedFiles);
-    } catch (error) {
-      console.error('Error fetching files:', error);
-      alert('Failed to fetch files from Firestore.');
+    } catch (err) {
+      console.error('Error fetching files:', err);
+      setError('Failed to fetch files from Firestore.');
     } finally {
       setLoading(false);
     }
@@ -32,27 +33,47 @@ const StoredFilesPage = ({ userEmail }) => {
     }
   }, [userEmail]);
 
+  if (loading) {
+    return <p>Loading your files...</p>; // Improved loading feedback
+  }
+
+  if (error) {
+    return <p className="error-message">{error}</p>; // Display error message
+  }
+
+  if (files.length === 0) {
+    return <p>No files found for your account. Upload one to get started!</p>;
+  }
+
   return (
     <div className="stored-files-page">
       <h2>Your Stored Files</h2>
-      {loading ? (
-        <p>Loading your files...</p>
-      ) : files.length > 0 ? (
-        <ul>
-          {files.map((file) => (
-            <li key={file.id}>
-              <a href={file.url} download={file.filename} className="download-link">
-                {file.filename}
-              </a>
+      <ul className="file-list">
+        {files.map((file) => (
+          <li key={file.id} className="file-item">
+            <a
+              href={file.url || '#'}
+              download={file.filename}
+              className="download-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {file.filename || 'Unnamed File'}
+            </a>
+            <p>
+              <strong>Uploaded At:</strong>{' '}
+              {file.uploadTimestamp
+                ? new Date(file.uploadTimestamp).toLocaleString()
+                : 'Unknown'}
+            </p>
+            {file.encryptionKey && (
               <p>
-                <strong>Uploaded At:</strong> {new Date(file.uploadTimestamp).toLocaleString()}
+                <strong>Encryption Key:</strong> {file.encryptionKey}
               </p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No files found for your account. Upload one to get started!</p>
-      )}
+            )}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
