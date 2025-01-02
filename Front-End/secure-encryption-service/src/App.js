@@ -14,7 +14,7 @@ function App() {
   const [userProfile, setUserProfile] = useState(null);
   const [files, setFiles] = useState([]);
 
-  const CLIENT_ID = '1008769288778-aqgtegvr1v0go0vkv1kv34o47pe9n3h0.apps.googleusercontent.com';
+  const CLIENT_ID = '137566307653-bg4rhf116kn6prqrpcqphebef6v40hn2.apps.googleusercontent.com';
 
   // Persistent login and fetching user files
   useEffect(() => {

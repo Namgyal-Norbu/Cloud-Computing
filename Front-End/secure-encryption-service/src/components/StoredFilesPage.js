@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { collection, query, where, getDocs } from 'firebase/firestore';
-import { db } from '../firebase'; // Import your Firestore instance
+import { db } from '../firebase'; // Import Firestore instance
 
 const StoredFilesPage = ({ userEmail }) => {
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null); // Added error state
+  const [error, setError] = useState(null);
 
-  // Fetch files from Firestore for the logged-in user
   const fetchFiles = async () => {
     try {
       const q = query(collection(db, 'uploads'), where('email', '==', userEmail));
@@ -34,11 +33,11 @@ const StoredFilesPage = ({ userEmail }) => {
   }, [userEmail]);
 
   if (loading) {
-    return <p>Loading your files...</p>; // Improved loading feedback
+    return <p>Loading your files...</p>;
   }
 
   if (error) {
-    return <p className="error-message">{error}</p>; // Display error message
+    return <p className="error-message">{error}</p>;
   }
 
   if (files.length === 0) {
@@ -53,7 +52,7 @@ const StoredFilesPage = ({ userEmail }) => {
           <li key={file.id} className="file-item">
             <a
               href={file.url || '#'}
-              download={file.filename}
+              download={file.filename || 'Unnamed File'}
               className="download-link"
               target="_blank"
               rel="noopener noreferrer"
@@ -63,7 +62,7 @@ const StoredFilesPage = ({ userEmail }) => {
             <p>
               <strong>Uploaded At:</strong>{' '}
               {file.uploadTimestamp
-                ? new Date(file.uploadTimestamp).toLocaleString()
+                ? new Date(file.uploadTimestamp.toDate()).toLocaleString()
                 : 'Unknown'}
             </p>
             {file.encryptionKey && (

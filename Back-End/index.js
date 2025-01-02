@@ -8,7 +8,10 @@ const { Firestore } = require('@google-cloud/firestore');
 const app = express();
 
 // Initialize Firestore
-const firestore = new Firestore();
+const firestore = new Firestore({
+  projectId: 'awesome-flash-444017-g4',
+  keyFilename: './newkey.json', // Ensure this path is correct
+});
 
 // Initialize Google Cloud Storage
 const storage = new Storage({ keyFilename: './newkey.json' });
