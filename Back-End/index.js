@@ -11,8 +11,8 @@ const app = express();
 const firestore = new Firestore();
 
 // Initialize Google Cloud Storage
-const storage = new Storage({ keyFilename: './Back-End/newkey.json' });
-const bucketName = 'encrypted-files-storage'; // Replace with your bucket name
+const storage = new Storage({ keyFilename: './newkey.json' });
+const bucketName = 'encrypted-files-storage'; 
 
 // Middleware
 app.use(cors());
