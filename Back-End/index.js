@@ -1,41 +1,33 @@
-import 'dotenv/config';
-import express, { json } from 'express';
-import cors from 'cors';
-import multer from 'multer';
-import { randomBytes, createCipheriv, createDecipheriv } from 'crypto';
-import { Storage } from '@google-cloud/storage';
-import { Firestore } from '@google-cloud/firestore';
-import { existsSync, mkdirSync, promises, unlinkSync } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
-
-// Define __dirname for ES module compatibility
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const express = require('express');
+const cors = require('cors');
+const multer = require('multer');
+const crypto = require('crypto');
+const { Storage } = require('@google-cloud/storage');
+const { Firestore } = require('@google-cloud/firestore');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
 
 // Initialize Firestore
 const firestore = new Firestore({
-  projectId: process.env.GOOGLE_CLOUD_PROJECT,
-  keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
+  projectId: 'awesome-flash-444017-g4',
+  keyFilename: './newkey.json',
 });
 
-
 // Initialize Google Cloud Storage
-const storage = new Storage({ keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS });
-const bucketName = process.env.BUCKET_NAME;
-
+const storage = new Storage({ keyFilename: './newkey.json' });
+const bucketName = 'encrypted-files-storage';
 
 // Ensure downloads directory exists
-const downloadsDir = join(__dirname, 'downloads');
-if (!existsSync(downloadsDir)) {
-  mkdirSync(downloadsDir);
+const downloadsDir = path.join(__dirname, 'downloads');
+if (!fs.existsSync(downloadsDir)) {
+  fs.mkdirSync(downloadsDir);
 }
 
 // Middleware
 app.use(cors());
-app.use(json());
+app.use(express.json());
 
 // Multer setup for file uploads (temporary local storage)
 const upload = multer({ dest: 'uploads/' });
@@ -50,47 +42,6 @@ app.get('/test-firestore', async (req, res) => {
     res.status(500).send('Firestore connection failed.');
   }
 });
-
-//file encryption
-const encryptFile = async (filePath) => {
-  const algorithm = 'aes-256-cbc';
-  const key = crypto.randomBytes(32);
-  const iv = crypto.randomBytes(16);
-  
-  const fileContent = await fs.promises.readFile(filePath);
-  const cipher = crypto.createCipheriv(algorithm, key, iv);
-  
-  let encryptedContent = Buffer.concat([
-    cipher.update(fileContent),
-    cipher.final()
-  ]);
-  
-  const encryptedPath = `${filePath}.encrypted`;
-  await fs.promises.writeFile(encryptedPath, encryptedContent);
-  
-  return {
-    encryptedPath,
-    key: key.toString('hex'),
-    iv: iv.toString('hex')
-  };
-};
-
-const decryptFile = async (filePath, outputFilePath, key, iv) => {
-  const algorithm = 'aes-256-cbc';
-  const fileContent = await fs.promises.readFile(filePath);
-  const decipher = crypto.createDecipheriv(
-    algorithm,
-    Buffer.from(key,'hex'),
-    Buffer.from(iv,'hex')
-  );
-
-  const decryptedContent = Buffer.concat([
-    decipher.update(fileContent),
-    decipher.final(),
-  ]);
-
-  await fs.promises.writeFile(outputFilePath,decryptedContent);
-};
 
 // API route: Upload file to Google Cloud Storage and Firestore
 app.post('/upload', upload.single('file'), async (req, res) => {
@@ -129,9 +80,6 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     // Add Firestore document with enhanced logging
     const docRef = await firestore.collection('uploads').add(fileMetadata);
     console.log('File metadata saved with ID:', docRef.id);
-
-    fs.unlinkSync(req.file.path);
-    fs.unlinkSync(encryptedPath);
 
     res.json({
       success: true,
@@ -190,25 +138,23 @@ app.get('/download-file', async (req, res) => {
       return res.status(404).json({ success: false, error: 'File not found in bucket.' });
     }
 
-    const { filename, encryptionKey, iv } = fileDoc.data();
-    const encryptedFilePath = path.join(downloadsDir, `${filename}.encrypted`);
-    const decryptedFilePath = path.join(downloadsDir, filename);
+    // Download the file to a temporary location
+    await storage.bucket(bucketName).file(`uploads/${filename}`).download({ destination: tempFilePath });
+    console.log(`File downloaded successfully to: ${tempFilePath}`);
 
-    await storage
-      .bucket(bucketName)
-      .file(`uploads/${filename}.encrypted`)
-      .download({ destination: encryptedFilePath });
-
-    await decryptFile(encryptedFilePath, decryptedFilePath, encryptionKey, iv);
-
-    res.download(decryptedFilePath, filename, (err) => {
+    // Serve the file for download
+    res.download(tempFilePath, filename, (err) => {
       if (err) {
         console.error('Error sending file to client:', err);
         return res.status(500).json({ success: false, error: 'Failed to send file to client.' });
       }
 
-      fs.unlinkSync(encryptedFilePath);
-      fs.unlinkSync(decryptedFilePath);
+      // Clean up the temporary file after the download
+      fs.unlink(tempFilePath, (unlinkErr) => {
+        if (unlinkErr) {
+          console.error('Error deleting temporary file:', unlinkErr);
+        }
+      });
     });
   } catch (error) {
     console.error('Error in /download-file route:', error);
@@ -223,14 +169,9 @@ app.get('/', (req, res) => {
 });
 
 // Start the server
-const PORT = process.env.PORT || 5001;
+const PORT = 5001;
 app.listen(PORT, () => {
   console.log(`Backend server is running on port ${PORT}`);
 });
-
-console.log(process.env);
-console.log('Environment Variables:', process.env);
-
-
 
 // Update: Ensured downloads directory exists, added file download route, and improved temporary file handling.
