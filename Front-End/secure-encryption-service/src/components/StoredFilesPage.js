@@ -22,19 +22,60 @@ const StoredFilesPage = ({ userEmail }) => {
     }
   };
 
+  // const handleDownload = async (filename) => {
+  //   console.log('Downloading file:', filename); // Debugging log
+  //   try {
+  //     const response = await fetch(`http://localhost:5001/download-file?filename=${encodeURIComponent(filename)}`, {
+  //       method: 'GET',
+  //     });
+  
+  //     if (!response.ok) {
+  //       const errorText = await response.text();
+  //       throw new Error(`Failed to download file: ${errorText}`);
+  //     }
+  
+  //     const blob = await response.blob();
+  //     const downloadUrl = URL.createObjectURL(blob);
+  //     const a = document.createElement('a');
+  //     a.href = downloadUrl;
+  //     a.download = filename;
+  //     document.body.appendChild(a);
+  //     a.click();
+  //     a.remove();
+  //     URL.revokeObjectURL(downloadUrl);
+  //   } catch (error) {
+  //     console.error('Error downloading file:', error);
+  //     alert(`Failed to download the file: ${error.message}`);
+  //   }
+  // };
+
   const handleDownload = async (filename) => {
-    console.log('Downloading file:', filename); // Debugging log
+    console.log('Requesting signed URL for:', filename); // Debugging log
     try {
-      const response = await fetch(`http://localhost:5001/download-file?filename=${encodeURIComponent(filename)}`, {
+      // Step 1: Fetch the signed URL from the backend
+      const response = await fetch(`http://localhost:5001/download?fileName=${encodeURIComponent(filename)}`, {
         method: 'GET',
       });
   
       if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(`Failed to download file: ${errorText}`);
+        throw new Error(`Failed to fetch signed URL: ${errorText}`);
       }
   
-      const blob = await response.blob();
+      const data = await response.json();
+      if (!data.success || !data.signedUrl) {
+        throw new Error('Failed to retrieve signed URL from the backend.');
+      }
+  
+      const signedUrl = data.signedUrl;
+  
+      // Step 2: Use the signed URL to download the file
+      const fileResponse = await fetch(signedUrl);
+      if (!fileResponse.ok) {
+        throw new Error('Failed to download the file from the signed URL.');
+      }
+  
+      const blob = await fileResponse.blob();
       const downloadUrl = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = downloadUrl;
@@ -44,7 +85,7 @@ const StoredFilesPage = ({ userEmail }) => {
       a.remove();
       URL.revokeObjectURL(downloadUrl);
     } catch (error) {
-      console.error('Error downloading file:', error);
+      console.error('Error during file download:', error);
       alert(`Failed to download the file: ${error.message}`);
     }
   };

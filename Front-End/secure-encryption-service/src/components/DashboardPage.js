@@ -3,7 +3,6 @@ import { collection, addDoc, getDocs } from 'firebase/firestore';
 import { db } from '../firebase'; // Import Firestore configuration
 import UploadSection from './UploadSection';
 import FileManagement from './FileManagement';
-import CryptoTest from './CryptoText';
 
 const DashboardPage = ({ handleUpload, handleEncrypt, response, userProfile }) => {
   const [files, setFiles] = useState([]);
@@ -79,24 +78,6 @@ const DashboardPage = ({ handleUpload, handleEncrypt, response, userProfile }) =
         !loading && <p>No files found for your account. Upload one to get started!</p>
       )}
 
-      {/* Crypto Test Section */}
-      <CryptoTest onEncrypt={handleEncrypt} />
-
-      {/* Display Encrypted Data */}
-      {response && (
-        <div style={{ marginTop: '20px' }}>
-          <h3>Encrypted Data</h3>
-          <p>
-            <strong>Encrypted Text:</strong> {response.encrypted}
-          </p>
-          <p>
-            <strong>Key:</strong> {response.key}
-          </p>
-          <p>
-            <strong>IV:</strong> {response.iv}
-          </p>
-        </div>
-      )}
     </div>
   );
 };
