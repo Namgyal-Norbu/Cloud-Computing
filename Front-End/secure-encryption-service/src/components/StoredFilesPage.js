@@ -28,12 +28,12 @@ const StoredFilesPage = ({ userEmail }) => {
       const response = await fetch(`http://localhost:5001/download-file?filename=${encodeURIComponent(filename)}`, {
         method: 'GET',
       });
-  
+
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(`Failed to download file: ${errorText}`);
       }
-  
+
       const blob = await response.blob();
       const downloadUrl = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -48,14 +48,12 @@ const StoredFilesPage = ({ userEmail }) => {
       alert(`Failed to download the file: ${error.message}`);
     }
   };
-  
-  
 
   useEffect(() => {
     if (userEmail) {
       fetchFiles();
     }
-  }, [userEmail, fetchFiles]);
+  }, [userEmail]);
 
   if (loading) return <p>Loading your files...</p>;
   if (error) return <p className="error-message">{error}</p>;
@@ -76,18 +74,17 @@ const StoredFilesPage = ({ userEmail }) => {
             <p>
               <strong>Uploaded At:</strong>{' '}
               {(() => {
-  if (file.uploadTimestamp) {
-    if (file.uploadTimestamp.seconds) {
-      // Firestore Timestamp
-      return new Date(file.uploadTimestamp.seconds * 1000).toLocaleString();
-    } else if (typeof file.uploadTimestamp === 'string' || file.uploadTimestamp instanceof Date) {
-      // String or Date
-      return new Date(file.uploadTimestamp).toLocaleString();
-    }
-  }
-  return 'Unknown'; // Fallback if timestamp is invalid or undefined
-})()}
-
+                if (file.uploadTimestamp) {
+                  if (file.uploadTimestamp._seconds) {
+                    // Firestore Timestamp object
+                    return new Date(file.uploadTimestamp._seconds * 1000).toLocaleString();
+                  } else if (typeof file.uploadTimestamp === 'string' || file.uploadTimestamp instanceof Date) {
+                    // ISO string or Date object
+                    return new Date(file.uploadTimestamp).toLocaleString();
+                  }
+                }
+                return 'Unknown'; // Fallback for invalid or undefined timestamp
+              })()}
             </p>
             <button onClick={() => handleDownload(file.filename)} className="download-button">
               Download

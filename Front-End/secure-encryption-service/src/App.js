@@ -79,7 +79,7 @@ function App() {
                 <>
                   <li><Link to="/dashboard">Dashboard</Link></li>
                   <li><Link to="/stored-files">Stored Files</Link></li>
-                  <li><Link to="/upload">Upload Files</Link></li> {/* Add Upload Section Link */}
+                 
                 </>
               )}
             </ul>
