@@ -147,15 +147,18 @@ app.post('/upload', upload.single('file'), async (req, res) => {
   }
 
   try {
+    // Add .encrypted to the original filename
+    const encryptedFilename = `${req.file.originalname}.encrypted`;
+    
     //encrypt file
     const { encryptedPath, iv } = await encryptFile(req.file.path, password);
-    const destination = `uploads/${req.file.originalname}.encrypted`;
+    const destination = `uploads/${encryptedFilename}`;
 
     // Upload encrypted file to cloud storage
     await storage.bucket(bucketName).upload(encryptedPath, { destination });
 
     const fileMetadata = {
-      filename: req.file.originalname,
+      filename: encryptedFilename,
       uploadTimestamp: Firestore.Timestamp.fromDate(new Date()),
       email,
       iv: iv.toString('hex'),             // Store IV securely
